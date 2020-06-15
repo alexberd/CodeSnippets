@@ -6,7 +6,7 @@ MyTextColumn, CONCAT(ExtractedTextLeft,"MyTextToSearch", ExtractedTextRight)
 FROM
 (
 	SELECT
-  MyTextColumn,
+	MyTextColumn,
 	SUBSTRING_INDEX(SUBSTRING_INDEX(MyTextColumn,"view", 1), " ", -3) AS ExtractedTextLeft,
 	SUBSTRING_INDEX(SUBSTRING_INDEX(MyTextColumn,"view", -1), " ", 2) AS ExtractedTextRight
 	FROM MyTable
