@@ -1,14 +1,16 @@
 ##The following code searches Column for the MyTextToSearch Text
 ##Reports the previous two and the following two words
 
+SET @KeywordToSearch = "MyTextToSearch";
+
 SELECT
-MyTextColumn, CONCAT(ExtractedTextLeft,"MyTextToSearch", ExtractedTextRight)
+MyTextColumn, CONCAT(ExtractedTextLeft,@KeywordToSearch, ExtractedTextRight)
 FROM
 (
 	SELECT
 	MyTextColumn,
-	SUBSTRING_INDEX(SUBSTRING_INDEX(MyTextColumn,"view", 1), " ", -3) AS ExtractedTextLeft,
-	SUBSTRING_INDEX(SUBSTRING_INDEX(MyTextColumn,"view", -1), " ", 2) AS ExtractedTextRight
+	SUBSTRING_INDEX(SUBSTRING_INDEX(MyTextColumn,@KeywordToSearch, 1), " ", -3) AS ExtractedTextLeft,
+	SUBSTRING_INDEX(SUBSTRING_INDEX(MyTextColumn,@KeywordToSearch, -1), " ", 2) AS ExtractedTextRight
 	FROM MyTable
-	Where MyTextColumn like "%view%"
+	Where MyTextColumn like CONCAT("%",@KeywordToSearch,"%")
 )as s;
